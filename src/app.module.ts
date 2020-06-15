@@ -7,5 +7,6 @@ import { ProcedureModule } from './procedure/procedure.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(typeOrmConfig), AuthModule, ProjectsModule, ProcedureModule],
+  exports: [ProjectsModule]
 })
 export class AppModule {}

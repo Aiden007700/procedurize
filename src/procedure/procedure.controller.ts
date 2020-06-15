@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -6,6 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ProcedureService } from './procedure.service';
+import { ProcedureDto } from './dto/procedure.dto';
 
 @Controller('procedure')
 export class ProcedureController {
@@ -21,8 +23,8 @@ export class ProcedureController {
   }
 
   @Post()
-  createProcedure() {
-    return this.procedureService.createProcedure();
+  createProcedure(@Body() procedureDto: ProcedureDto) {
+    return this.procedureService.createProcedure(procedureDto);
   }
 
   @Patch('/:id')

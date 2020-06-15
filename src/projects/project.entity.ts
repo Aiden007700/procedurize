@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Procedure } from '../procedure/procedure.entity'
 
 @Entity()
 export class Project extends BaseEntity{
@@ -10,4 +11,7 @@ export class Project extends BaseEntity{
 
   @Column({nullable: true})
   description: string
+
+  @ManyToOne(type => Procedure, procedure => procedure.project)
+  procedures: Procedure[]
 }
