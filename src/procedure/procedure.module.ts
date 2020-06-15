@@ -4,11 +4,12 @@ import { ProcedureService } from './procedure.service';
 import { ProcedureRepository } from './procedure.repository';
 import { ProcedureController } from './procedure.controller';
 import { ProjectsModule } from '../projects/projects.module';
+import { ProjectRepository } from '../projects/project.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ProcedureRepository]),
-    ProjectsModule
+    TypeOrmModule.forFeature([ProcedureRepository, ProjectRepository]),
+    ProjectsModule,
   ],
   providers: [ProcedureService],
   controllers: [ProcedureController],
