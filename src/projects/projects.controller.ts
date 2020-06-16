@@ -2,12 +2,14 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from 
 import { ProjectsService } from './projects.service';
 import { ProjectDto } from './dto/project.dto';
 import { Project } from './project.entity';
+import { ApiImplicitParam } from '@nestjs/swagger/dist/decorators/api-implicit-param.decorator';
 
 @Controller('projects')
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
   @Get('/:id?')
+  @ApiImplicitParam({name: 'id', required: false})
   getProject(@Param('id') id: string): Promise<Project | Project[]> {
     return this.projectsService.getProject(parseInt(id))
   }
