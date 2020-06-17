@@ -21,14 +21,6 @@ export class ProcedureController {
     return this.procedureService.getProcedure(id);
   }
 
-  // how shuld I handle this? move it to projects? of so how do i name it?
-  @Get('by-project/:projectId')
-  getProceduresByProject(
-    @Param('projectId', ParseIntPipe) projectId: number,
-  ): Promise<Procedure[]> {
-    return this.procedureService.getProceduresByProject(projectId);
-  }
-
   @Delete('/:id')
   deleteProcedure(@Param('id', ParseIntPipe) id: number): Promise<Procedure> {
     return this.procedureService.deleteProcedure(id);

@@ -14,10 +14,6 @@ export class ProcedureRepository extends Repository<Procedure> {
     return procedure;
   }
 
-  async getProceduresByProject(projectId: number): Promise<Procedure[]> {
-    return await this.find({ where: { project: { id: projectId } } });
-  }
-
   async deleteProcedure(id: number): Promise<Procedure> {
     const pocedure = await this.getProcedure(id);
     await this.delete(id);

@@ -18,10 +18,6 @@ export class ProcedureService {
     return this.procedureRepository.getProcedure(id);
   }
 
-  async getProceduresByProject(projectId: number): Promise<Procedure[]> {
-    return await this.procedureRepository.getProceduresByProject(projectId);
-  }
-
   async deleteProcedure(id: number): Promise<Procedure> {
     return this.procedureRepository.deleteProcedure(id);
   }
