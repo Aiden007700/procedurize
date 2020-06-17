@@ -2,12 +2,13 @@ import { EntityRepository, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Project } from './project.entity';
 import { ProjectDto } from './dto/project.dto';
+import { User } from '../auth/user.entity';
 
 @EntityRepository(Project)
 export class ProjectRepository extends Repository<Project> {
-  async getProject(id: number): Promise<Project> {
+  async getProject(id: number, user: User): Promise<Project> {
     const project = await this.findOne({
-      where: { id },
+      where: { id, user },
       relations: ['procedures'],
     });
     if (!project) {
@@ -16,29 +17,30 @@ export class ProjectRepository extends Repository<Project> {
     return project;
   }
 
-  async getAllProjects(): Promise<Project[]> {
-    const projects = this.find();
+  async getAllProjects(user: User): Promise<Project[]> {
+    const projects = this.find({ where: { user } });
     return projects;
   }
 
-  async createProject(projectDto: ProjectDto): Promise<Project> {
+  async createProject(projectDto: ProjectDto, user: User): Promise<Project> {
     const { name, description } = projectDto;
     const project = new Project();
     console.log(name, description);
     project.name = name;
     project.description = description || null;
+    project.user = user;
     await project.save();
     return project;
   }
 
-  async deleteProject(id: number): Promise<Project> {
-    const project = await this.getProject(id);
+  async deleteProject(id: number, user: User): Promise<Project> {
+    const project = await this.getProject(id, user);
     await this.delete(project.id);
     return project;
   }
 
-  async updateProject(id, projectDto): Promise<Project> {
-    const project = await this.getProject(id);
+  async updateProject(id, projectDto, user: User): Promise<Project> {
+    const project = await this.getProject(id, user);
     const { name, description } = projectDto;
 
     project.name = name || project.name;

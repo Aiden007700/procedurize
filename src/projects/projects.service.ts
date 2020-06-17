@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectRepository } from './project.repository';
 import { ProjectDto } from './dto/project.dto';
 import { Project } from './project.entity';
+import { User } from '../auth/user.entity';
 
 @Injectable()
 export class ProjectsService {
@@ -11,20 +12,20 @@ export class ProjectsService {
     private projectRepository: ProjectRepository,
   ) {}
 
-  async getProject(id?: number): Promise<Project | Project[]> {
-    if (id) return this.projectRepository.getProject(id)
-    return this.projectRepository.getAllProjects()
+  async getProject(user: User, id?: number): Promise<Project | Project[]> {
+    if (id) return this.projectRepository.getProject(id, user)
+    return this.projectRepository.getAllProjects(user)
   }
 
-  async createProject(projectDto: ProjectDto): Promise<Project> {
-    return await this.projectRepository.createProject(projectDto);
+  async createProject(projectDto: ProjectDto, user: User): Promise<Project> {
+    return await this.projectRepository.createProject(projectDto, user);
   }
 
-  async deleteProject(id: number): Promise<Project> {
-    return this.projectRepository.deleteProject(id)
+  async deleteProject(id: number, user: User): Promise<Project> {
+    return this.projectRepository.deleteProject(id, user)
   }
 
-  async updateProject(id: number, projectDto: ProjectDto): Promise<Project> {
-     return this.projectRepository.updateProject(id, projectDto);
+  async updateProject(id: number, projectDto: ProjectDto, user: User): Promise<Project> {
+     return this.projectRepository.updateProject(id, projectDto, user);
   }
 }

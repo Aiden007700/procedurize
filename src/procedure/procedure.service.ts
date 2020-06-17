@@ -4,6 +4,7 @@ import { ProcedureRepository } from './procedure.repository';
 import { ProcedureDto } from './dto/procedure.dto';
 import { ProjectRepository } from '../projects/project.repository';
 import { Procedure } from './procedure.entity';
+import { User } from '../auth/user.entity';
 
 @Injectable()
 export class ProcedureService {
@@ -22,9 +23,9 @@ export class ProcedureService {
     return this.procedureRepository.deleteProcedure(id);
   }
 
-  async createProcedure(procedureDto: ProcedureDto): Promise<Procedure> {
+  async createProcedure(procedureDto: ProcedureDto, user: User): Promise<Procedure> {
     const { projectId } = procedureDto;
-    const project = await this.projectRepository.getProject(projectId);
+    const project = await this.projectRepository.getProject(projectId, user);
     const procedure = await this.procedureRepository.createProcedure(
       procedureDto,
       project,
